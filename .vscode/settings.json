@@ -1,0 +1,14 @@
+{   
+    
+    "python.pythonPath": "/usr/local/bin/python3",
+    "python.linting.pylintArgs": [
+        "--unsafe-load-any-extension=y"
+    ],
+
+    "workbench.colorCustomizations": {
+        "editorCursor.foreground": "#c9c9c9",
+        "editorLineNumber.activeForeground": "#ededed"
+    },
+    
+    "editor.minimap.enabled": false
+}
