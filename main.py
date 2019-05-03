@@ -20,6 +20,7 @@ pygame.init()
 ## ----------------------------------------------------------------------- ##
 # -- Grays -- #
 BLACK = (0, 0, 0)
+V_DARK_GRAY = (45, 45, 45)
 DARK_GRAY = (76, 76, 76)
 M_DARK_GRAY = (111, 111, 111)
 GRAY = (165, 165, 165)
@@ -28,9 +29,10 @@ V_LIGHT_GRAY = (229, 229, 229)
 WHITE = (255, 255, 255)
 # -- Colors -- #
 PINK = (208, 45, 130)
+ELEC_PINK = (255, 76, 175)
 BLUE = (45, 130, 208)
 ELEC_BLUE = (45, 205, 208)
-GREEN = (130, 208, 45)
+GREEN = (130, 210, 45)
 
 ## ----------------------------------------------------------------------- ##
 #   Screen dimmensions
@@ -43,6 +45,9 @@ CENTER_Y = WIN_HEIGHT / 2
 PLAY_RECT = pygame.Rect(WIN_WIDTH * 7 / 24, WIN_HEIGHT * 3 / 24, WIN_WIDTH * 5 / 12, WIN_HEIGHT * 5 / 6)
 # -- Pieces area -- #
 PIECES_RECT = pygame.Rect(WIN_WIDTH * 3 / 96, WIN_HEIGHT / 5, WIN_WIDTH * 21 / 96, WIN_HEIGHT * 2 / 3)
+SCORE_RECT = pygame.Rect(WIN_WIDTH * 72 / 96, WIN_HEIGHT / 4, WIN_WIDTH * 21 / 96, WIN_HEIGHT * 1 / 5)
+NEXT_RECT = pygame.Rect(WIN_WIDTH * 72 / 96, WIN_HEIGHT * 3 / 5, WIN_WIDTH * 21 / 96, WIN_HEIGHT * 1 / 5)
+
 
 ## ----------------------------------------------------------------------- ##
 #   Fonts
@@ -61,7 +66,7 @@ label_font = pygame.font.SysFont(None, int(WIN_HEIGHT / 12))
 WIN_SIZE = (WIN_WIDTH, WIN_HEIGHT)
 win = pygame.display.set_mode(WIN_SIZE)
 pygame.display.set_caption('---  TETRIS  by  DRAKE  ---')
-win.fill(M_DARK_GRAY)
+win.fill(BLACK)
 
 
 
@@ -72,16 +77,25 @@ win.fill(M_DARK_GRAY)
 ## ----------------------------------------------------------------------- ##
 def setup_game_window():
     # -- Main board window -- #
-    draw_with_border_and_shadow(win, PLAY_RECT, BLACK, V_LIGHT_GRAY, 5, ELEC_BLUE, 5, 7)
+    draw_with_border_and_shadow(win, PLAY_RECT, V_DARK_GRAY, V_LIGHT_GRAY, 5, BLUE, 5, 7)
     # -- Title -- #
     disp_text(win, title_font, 'TETRIS', BLUE, (CENTER_X - 5, PLAY_RECT[1] / 2 + 5))
-    disp_text(win, title_font, 'TETRIS', WHITE, (CENTER_X, PLAY_RECT[1] / 2))
+    disp_text(win, title_font, 'TETRIS', V_LIGHT_GRAY, (CENTER_X, PLAY_RECT[1] / 2))
     # -- Pieces window -- #
-    draw_with_border_and_shadow(win, PIECES_RECT, BLACK, V_LIGHT_GRAY, 5, PINK, 5, 7)
+    draw_with_border_and_shadow(win, PIECES_RECT, V_DARK_GRAY, V_LIGHT_GRAY, 5, BLUE, 5, 7)
     # -- Pieces Label -- #
-    disp_text(win, label_font, 'PIECES', PINK, (PLAY_RECT[0] / 2 - 3, PIECES_RECT[1] * 5 / 6 + 3))
-    disp_text(win, label_font, 'PIECES', WHITE, (PLAY_RECT[0] / 2, PIECES_RECT[1] * 5 / 6))
-
+    disp_text(win, label_font, 'PIECES', BLUE, (PLAY_RECT[0] / 2 - int(0.015 * WIN_WIDTH) - 3, PIECES_RECT[1] - int(0.04 * WIN_HEIGHT) + 3))
+    disp_text(win, label_font, 'PIECES', V_LIGHT_GRAY, (PLAY_RECT[0] / 2 -int(0.015 * WIN_WIDTH), PIECES_RECT[1] - int(0.04 * WIN_HEIGHT)))
+    # -- Stats Window -- #
+    draw_with_border_and_shadow(win, SCORE_RECT, V_DARK_GRAY, V_LIGHT_GRAY, 5, BLUE, 5, 7)
+    # -- Stats Label -- #
+    disp_text(win, label_font, 'SCORE', BLUE, ((WIN_WIDTH + SCORE_RECT[0]) / 2 - int(0.035 * WIN_WIDTH) - 3, SCORE_RECT[1] - int(0.04 * WIN_HEIGHT)+ 3))
+    disp_text(win, label_font, 'SCORE', V_LIGHT_GRAY, ((WIN_WIDTH + SCORE_RECT[0]) / 2 - int(0.035 * WIN_WIDTH), SCORE_RECT[1] - int(0.04 * WIN_HEIGHT)))
+    # -- Next Piece Window -- #
+    draw_with_border_and_shadow(win, NEXT_RECT, V_DARK_GRAY, V_LIGHT_GRAY, 5, BLUE, 5, 7)
+    # -- Next Piece Label -- #
+    disp_text(win, label_font, 'NEXT', BLUE, ((WIN_WIDTH + NEXT_RECT[0]) / 2 - int(0.05 * WIN_WIDTH) - 3, NEXT_RECT[1] - int(0.04 * WIN_HEIGHT) + 3))
+    disp_text(win, label_font, 'NEXT', V_LIGHT_GRAY, ((WIN_WIDTH + NEXT_RECT[0]) / 2 - int(0.05 * WIN_WIDTH), NEXT_RECT[1] - int(0.04 * WIN_HEIGHT)))
 
 ## ----------------------------------------------------------------------- ##
 #   Text display function
